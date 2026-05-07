@@ -301,7 +301,11 @@ p { margin: 0 0 1em; }
   color: var(--text-on-dark);
   overflow: hidden;
   isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
 }
+.hero__inner { flex: 1; }
 .hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero__glow {
   position: absolute;
@@ -1388,7 +1392,7 @@ p { margin: 0 0 1em; }
   .status-banner { font-size: 12px; }
   .status-banner__inner { padding: 8px 12px; }
 
-  .hero__inner { padding: 80px 18px 60px; min-height: auto; }
+  .hero__inner { padding: 130px 18px 56px; min-height: auto; }
   .hero__title { font-size: clamp(36px, 9vw, 48px); }
   .hero__subtitle { font-size: 16px; margin-bottom: 24px; }
   .hero__cta { flex-direction: column; align-items: stretch; }
