@@ -159,6 +159,19 @@ p { margin: 0 0 1em; }
 .btn--lg  { padding: 18px 28px; font-size: 17px; }
 .btn--block { width: 100%; }
 
+/* Header login button — minimalist outline */
+.btn--login {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+.btn--login:hover {
+  border-color: var(--lobster-300);
+  color: var(--lobster-300);
+  background: rgba(255, 138, 101, 0.06);
+}
+
 /* ==========================================================
    Status banner
    ========================================================== */
