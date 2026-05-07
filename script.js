@@ -284,7 +284,7 @@
   });
 
   // ==========================================================
-  // LOGIN MODAL
+  // LOGIN MODAL — open/close only; methods are direct links.
   // ==========================================================
   const modal = document.getElementById('login-modal');
   if (modal) {
@@ -292,8 +292,6 @@
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      const phone = modal.querySelector('[data-phone]');
-      if (phone) setTimeout(() => phone.focus(), 80);
     };
     const close = () => {
       modal.classList.remove('is-open');
@@ -305,59 +303,5 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
     });
-
-    // View switcher: methods <-> phone
-    const views = modal.querySelectorAll('[data-view]');
-    const showView = name => {
-      views.forEach(v => { v.hidden = v.dataset.view !== name; });
-      if (name === 'phone') {
-        const ph = modal.querySelector('[data-phone]');
-        if (ph) setTimeout(() => ph.focus(), 80);
-      }
-    };
-    modal.querySelectorAll('[data-show]').forEach(btn => {
-      btn.addEventListener('click', () => showView(btn.dataset.show));
-    });
-
-    // Phone input mask
-    const phoneInput = modal.querySelector('[data-phone]');
-    const phoneHint = modal.querySelector('[data-phone-hint]');
-    const formatPhone = v => {
-      const d = v.replace(/\D/g, '').slice(0, 10);
-      let out = '';
-      if (d.length > 0) out += d.slice(0, 3);
-      if (d.length >= 4) out = d.slice(0, 3) + ' ' + d.slice(3, 6);
-      if (d.length >= 7) out = d.slice(0, 3) + ' ' + d.slice(3, 6) + '-' + d.slice(6, 8);
-      if (d.length >= 9) out = d.slice(0, 3) + ' ' + d.slice(3, 6) + '-' + d.slice(6, 8) + '-' + d.slice(8, 10);
-      return out;
-    };
-    if (phoneInput) {
-      phoneInput.addEventListener('input', e => {
-        e.target.value = formatPhone(e.target.value);
-        if (phoneHint) phoneHint.textContent = 'Отправим SMS с кодом';
-      });
-    }
-
-    // Form submit (demo)
-    const form = modal.querySelector('form[data-view="phone"]');
-    if (form) {
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const digits = (phoneInput.value || '').replace(/\D/g, '');
-        if (digits.length < 10) {
-          if (phoneHint) {
-            phoneHint.textContent = 'Введите номер полностью';
-            phoneHint.classList.add('field__hint--err');
-          }
-          phoneInput.focus();
-          return;
-        }
-        if (phoneHint) {
-          phoneHint.textContent = 'Код отправлен на +7 ' + phoneInput.value;
-          phoneHint.classList.remove('field__hint--err');
-          phoneHint.classList.add('field__hint--ok');
-        }
-      });
-    }
   }
 })();
