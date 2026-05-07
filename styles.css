@@ -52,12 +52,18 @@
   --t: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; min-width: 0; }
 *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
 
 body {
+  overflow-x: hidden;
+  max-width: 100vw;
   margin: 0;
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 17px;
@@ -390,46 +396,111 @@ p { margin: 0 0 1em; }
   color: var(--text-on-dark-soft);
 }
 
-/* Phone mockup */
+/* ==========================================================
+   iPhone 17 Pro Max mockup
+   — Titanium frame, Dynamic Island, side buttons
+   ========================================================== */
 .hero__visual {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 580px;
+  min-height: 620px;
 }
 .phone {
   position: relative;
-  width: 300px;
-  height: 600px;
-  background: linear-gradient(160deg, #1A1A22 0%, #0A0A0F 100%);
-  border-radius: 46px;
-  padding: 14px;
+  width: 310px;
+  height: 640px;
+  border-radius: 56px;
+  /* Titanium frame: layered linear gradients for metal feel */
+  background:
+    linear-gradient(135deg, #4D4D52 0%, #1F1F25 25%, #2E2E36 50%, #15151A 75%, #3A3A42 100%);
+  padding: 9px;
   box-shadow:
-    0 0 0 2px #2A2A35,
-    0 50px 100px -20px rgba(255, 61, 46, 0.4),
-    0 30px 60px -30px rgba(0, 0, 0, 0.7);
+    0 0 0 1.5px #5A5A60,
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.06),
+    0 50px 100px -20px rgba(255, 61, 46, 0.42),
+    0 30px 60px -30px rgba(0, 0, 0, 0.75);
   animation: float 6s ease-in-out infinite;
+  --tilt-y: 0deg;
+  --tilt-x: 0deg;
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-12px) rotate(-1deg); }
+  0%, 100% { transform: translateY(0) rotate(-2deg) rotateY(var(--tilt-y)) rotateX(var(--tilt-x)); }
+  50%      { transform: translateY(-12px) rotate(-1deg) rotateY(var(--tilt-y)) rotateX(var(--tilt-x)); }
 }
-.phone__notch {
-  position: absolute;
-  top: 18px; left: 50%; transform: translateX(-50%);
-  width: 100px; height: 24px;
+
+/* Inner black bezel (between titanium frame and screen) */
+.phone__frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 47px;
   background: #0A0A0F;
-  border-radius: 99px;
-  z-index: 2;
+  padding: 4px;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Side buttons (titanium) */
+.phone__btn {
+  position: absolute;
+  background: linear-gradient(180deg, #5A5A60 0%, #3A3A42 50%, #5A5A60 100%);
+  z-index: -1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.4);
+}
+.phone__btn--mute   { top: 90px;  left: -3px;  width: 4px;  height: 32px; border-radius: 2px 0 0 2px; }
+.phone__btn--vol-up { top: 138px; left: -3px;  width: 4px;  height: 56px; border-radius: 2px 0 0 2px; }
+.phone__btn--vol-dn { top: 208px; left: -3px;  width: 4px;  height: 56px; border-radius: 2px 0 0 2px; }
+.phone__btn--power  { top: 160px; right: -3px; width: 4px;  height: 90px; border-radius: 0 2px 2px 0; }
+
+/* Dynamic Island (pill-shaped cutout) */
+.phone__island {
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: 118px; height: 32px;
+  background: #000;
+  border-radius: 99px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.phone__island::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: radial-gradient(circle at 30% 30%, #1A2C3F 0%, #050A12 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), inset 0 0 2px rgba(255,255,255,0.15);
+  margin-right: 8px;
+}
+.phone__island-cam {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #2A3F5F 0%, #050A12 100%);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), inset 0 0 2px rgba(255,255,255,0.15);
+}
+
+/* Home indicator bar */
+.phone__home {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  width: 130px; height: 5px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 99px;
+  z-index: 6;
+}
+
 .phone__screen {
   width: 100%; height: 100%;
-  border-radius: 36px;
+  border-radius: 43px;
   background: linear-gradient(180deg, #1F0A08 0%, #0F0506 100%);
   overflow: hidden;
   position: relative;
-  padding: 14px 18px;
+  padding: 12px 16px 24px;
   display: flex;
   flex-direction: column;
 }
@@ -439,30 +510,31 @@ p { margin: 0 0 1em; }
   font-size: 12px;
   color: var(--ink-100);
   font-weight: 600;
-  padding: 6px 16px 12px;
+  padding: 8px 14px 6px;
+  margin-top: 30px;
 }
 .phone__app {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 18px 8px 8px;
-  gap: 12px;
+  padding: 8px 6px 4px;
+  gap: 10px;
 }
 .phone__lobster {
-  font-size: 38px;
+  font-size: 32px;
   filter: drop-shadow(0 6px 16px rgba(255, 61, 46, 0.7));
 }
 .phone__brand {
   font-family: 'Unbounded', sans-serif;
   font-weight: 900;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.02em;
   color: white;
 }
 .phone__on {
   position: relative;
-  width: 110px; height: 110px;
+  width: 96px; height: 96px;
   border-radius: 50%;
   background: var(--grad-lobster);
   display: flex;
@@ -523,23 +595,24 @@ p { margin: 0 0 1em; }
 .phone__speed span { color: var(--lobster-300); font-size: 10px; font-weight: 700; }
 .phone__apps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
   width: 100%;
   margin-top: 4px;
 }
 .phone__app-tile {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px;
-  padding: 8px 4px;
+  border-radius: 11px;
+  padding: 6px 2px 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  font-size: 18px;
+  font-size: 16px;
 }
-.phone__app-tile small { font-size: 9.5px; color: var(--ink-100); font-weight: 600; }
+.phone__app-tile .ic-brand { width: 22px; height: 22px; }
+.phone__app-tile small { font-size: 8.5px; color: var(--ink-100); font-weight: 600; line-height: 1; }
 
 .hero__floating {
   position: absolute;
@@ -1971,4 +2044,136 @@ p { margin: 0 0 1em; }
    ========================================================== */
 .hero__glow, .phone, .cta__lobster, .marquee__track { will-change: transform; }
 .modal__dialog { will-change: opacity, transform; }
+
+/* ==========================================================
+   GLOBAL OVERFLOW SAFETY
+   ========================================================== */
+.section,
+.hero,
+.cta,
+.footer { overflow: hidden; }
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+.ic, .ic-brand { height: auto; }
+
+/* Don't let any single word break layout */
+h1, h2, h3, p { overflow-wrap: anywhere; word-break: break-word; }
+
+/* ==========================================================
+   RESPONSIVE — TABLET (≤1024px)
+   ========================================================== */
+@media (max-width: 1024px) {
+  .killer { grid-template-columns: 1fr 1fr; }
+  .killer__card:first-child { grid-column: 1 / -1; }
+
+  .trust-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ==========================================================
+   RESPONSIVE — MOBILE (≤720px) — fixes for new components
+   ========================================================== */
+@media (max-width: 720px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  .killer { grid-template-columns: 1fr; gap: 16px; }
+  .killer__card { padding: 28px 22px; }
+  .killer__card:first-child { grid-column: 1; }
+  .killer__card h3 { font-size: 22px; }
+  .killer__card p { font-size: 15px; }
+  .killer__icon { width: 56px; height: 56px; font-size: 26px; border-radius: 16px; }
+
+  .killer__chips { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .killer__chips span { width: auto; height: 36px; padding: 4px; }
+
+  .killer__metric { gap: 12px; }
+  .killer__metric > div { flex: 1 1 auto; min-width: 30%; }
+  .killer__metric strong { font-size: 26px; }
+  .killer__metric strong i { font-size: 14px; }
+
+  .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .trust-block { padding: 18px 14px; }
+  .trust-block__num { font-size: 24px; }
+
+  .hero__bullets li { font-size: 15px; gap: 10px; }
+  .hero__bullet-ic { width: 22px; height: 22px; font-size: 11px; }
+
+  .hero__risk {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .badge { font-size: 12.5px; padding: 7px 12px; }
+  .countdown { letter-spacing: 0.02em; }
+
+  .status-banner__inner { font-size: 11.5px; gap: 6px; padding: 7px 10px; }
+  .status-banner__inner > span:last-child { line-height: 1.4; }
+
+  .feature__chips span { font-size: 12.5px; padding: 5px 10px 5px 5px; }
+  .feature__chips .ic-brand { width: 18px; height: 18px; }
+
+  .compare__row { padding: 12px 14px; gap: 8px; }
+  .compare__row--head { font-size: 12px; }
+  .compare__lobster { font-size: 14px; }
+
+  .plan { padding: 26px 22px; }
+  .plan__amount { font-size: 40px; }
+  .plan__old { font-size: 18px; }
+
+  .reviews { gap: 14px; }
+  .review { padding: 22px; }
+  .review p { font-size: 14.5px; }
+
+  .faq__item { padding: 16px 18px; }
+  .faq__item summary { font-size: 15.5px; }
+  .faq__item p { font-size: 14.5px; }
+
+  .footer { padding: 50px 0 20px; }
+  .footer__brand p { font-size: 14px; }
+
+  .cta__lobster { font-size: 56px; }
+  .cta__title { font-size: 30px; line-height: 1.1; }
+  .cta__text { font-size: 15.5px; }
+
+  /* iPhone 17 Pro Max mockup — sized down for mobile */
+  .phone { width: 264px; height: 544px; padding: 7px; border-radius: 48px; }
+  .phone__frame { border-radius: 41px; }
+  .phone__screen { border-radius: 37px; padding: 10px 14px 22px; }
+  .phone__island { width: 100px; height: 28px; top: 10px; }
+  .phone__status { margin-top: 26px; padding: 6px 12px 6px; font-size: 11px; }
+  .phone__on { width: 84px; height: 84px; }
+  .phone__on-text { font-size: 12px; }
+  .phone__lobster { font-size: 26px; }
+  .phone__brand { font-size: 12px; }
+  .phone__app { gap: 8px; padding: 4px 4px 4px; }
+  .phone__app-tile { padding: 5px 2px 3px; border-radius: 9px; }
+  .phone__app-tile .ic-brand { width: 18px; height: 18px; }
+  .phone__app-tile small { font-size: 7.5px; }
+  .phone__home { width: 100px; height: 4px; bottom: 6px; }
+  .phone__btn--mute   { top: 76px;  height: 26px; }
+  .phone__btn--vol-up { top: 116px; height: 46px; }
+  .phone__btn--vol-dn { top: 174px; height: 46px; }
+  .phone__btn--power  { top: 132px; height: 78px; }
+
+  .hero__floating { font-size: 12px; max-width: 180px; }
+  .hero__floating--3 { display: none; }
+
+  .marquee { padding: 14px 0; }
+  .marquee__track span { font-size: 13px; gap: 6px; }
+  .marquee__track .ic-brand { width: 20px; height: 20px; }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .hero__title { font-size: 36px; }
+  .hero__subtitle { font-size: 15px; }
+  .section__title { font-size: 26px; }
+  .killer__chips { grid-template-columns: repeat(5, 1fr); }
+  .killer__chips span { height: 32px; }
+  .phone { width: 240px; height: 488px; }
+  .plan__amount { font-size: 36px; }
+}
 

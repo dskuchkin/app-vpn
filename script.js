@@ -230,6 +230,44 @@
     draw();
   }
 
+  // ---- Hero parallax (mouse-follow on glows + phone tilt via CSS vars) ----
+  const heroEl = document.querySelector('.hero');
+  const heroBg = document.querySelector('.hero__bg');
+  const phone = document.querySelector('.phone');
+  if (heroEl && heroBg && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    const glows = heroBg.querySelectorAll('.hero__glow');
+    let mx = 0, my = 0, tx = 0, ty = 0, parallaxRaf = 0;
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const loop = () => {
+      tx = lerp(tx, mx, 0.06);
+      ty = lerp(ty, my, 0.06);
+      glows.forEach((g, i) => {
+        const k = (i + 1) * 30;
+        g.style.transform = `translate3d(${tx * k}px, ${ty * k}px, 0)`;
+      });
+      if (phone) {
+        // Set CSS vars; the float keyframes apply them, so tilt and float compose
+        phone.style.setProperty('--tilt-y', (tx * 8).toFixed(2) + 'deg');
+        phone.style.setProperty('--tilt-x', (-ty * 5).toFixed(2) + 'deg');
+      }
+      if (Math.abs(mx - tx) > 0.001 || Math.abs(my - ty) > 0.001) {
+        parallaxRaf = requestAnimationFrame(loop);
+      } else {
+        parallaxRaf = 0;
+      }
+    };
+    heroEl.addEventListener('mousemove', e => {
+      const r = heroEl.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width - 0.5;
+      my = (e.clientY - r.top) / r.height - 0.5;
+      if (!parallaxRaf) loop();
+    }, { passive: true });
+    heroEl.addEventListener('mouseleave', () => {
+      mx = 0; my = 0;
+      if (!parallaxRaf) loop();
+    }, { passive: true });
+  }
+
   // ---- Smooth anchor scroll ----
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
