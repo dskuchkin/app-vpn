@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=14" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🦞</text></svg>" />
 </head>
 <body>
@@ -229,9 +229,18 @@
         </p>
 
         <ul class="hero__bullets">
-          <li><span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><strong>Работает</strong> во время глушения сети</li>
-          <li><span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><strong>Обходит</strong> свежие блокировки РКН</li>
-          <li><span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><strong>Без логов</strong> и сбора данных</li>
+          <li>
+            <span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-signal"/></svg></span>
+            <span class="hero__bullet-label">Работает в глушение&nbsp;сети</span>
+          </li>
+          <li>
+            <span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
+            <span class="hero__bullet-label">Обходит блокировки&nbsp;РКН</span>
+          </li>
+          <li>
+            <span class="hero__bullet-ic"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>
+            <span class="hero__bullet-label">Без логов и&nbsp;данных</span>
+          </li>
         </ul>
 
         <div class="hero__cta">
@@ -854,13 +863,25 @@
         <p class="modal__sub">Один аккаунт — все ваши устройства</p>
       </div>
 
-      <div class="modal__tabs" role="tablist">
-        <button class="modal__tab is-active" data-tab="phone" role="tab" aria-selected="true">По номеру</button>
-        <button class="modal__tab" data-tab="tg" role="tab" aria-selected="false">Через Telegram</button>
+      <!-- Default view: two methods -->
+      <div class="modal__methods" data-view="methods">
+        <button type="button" class="btn btn--primary btn--block btn--lg" data-show="phone">
+          <svg class="ic" viewBox="0 0 24 24"><use href="#i-phone"/></svg>
+          По номеру телефона
+        </button>
+        <div class="modal__divider"><span>или</span></div>
+        <a href="https://t.me/lobster_vpn_bot?start=login" target="_blank" rel="noopener" class="btn btn--tg btn--block btn--lg">
+          <img class="ic-brand" src="https://raw.githubusercontent.com/glincker/thesvg/main/public/icons/telegram/default.svg" alt="" loading="lazy" decoding="async">
+          Войти через Telegram
+        </a>
       </div>
 
-      <!-- Phone login -->
-      <form class="modal__form" data-tab-pane="phone" novalidate>
+      <!-- Phone view -->
+      <form class="modal__form" data-view="phone" hidden novalidate>
+        <button type="button" class="modal__back" data-show="methods">
+          <svg class="ic" viewBox="0 0 24 24" style="transform:rotate(180deg)"><use href="#i-arrow-right"/></svg>
+          Назад
+        </button>
         <label class="field">
           <span class="field__label">Номер телефона</span>
           <div class="field__phone">
@@ -884,27 +905,10 @@
         </button>
       </form>
 
-      <!-- Telegram login -->
-      <div class="modal__form" data-tab-pane="tg" hidden>
-        <p class="modal__tg-text">Один тап в Telegram — и вы в личном кабинете. Безопасно, без SMS, без паролей.</p>
-        <a href="https://t.me/lobster_vpn_bot?start=login" target="_blank" rel="noopener" class="btn btn--tg btn--block btn--lg">
-          <img class="ic-brand" src="https://raw.githubusercontent.com/glincker/thesvg/main/public/icons/telegram/default.svg" alt="" loading="lazy" decoding="async">
-          Войти через Telegram
-        </a>
-        <p class="modal__tg-hint">Откроется бот в Telegram. Нажмите «Запустить» — и аккаунт привяжется автоматически.</p>
-      </div>
-
-      <div class="modal__divider"><span>или</span></div>
-
-      <div class="modal__signup">
-        Ещё нет аккаунта?
-        <a href="#pricing" data-close-login>Попробовать 1 день бесплатно</a>
-      </div>
-
-      <p class="modal__legal">Нажимая «Получить код» или «Войти через Telegram», вы соглашаетесь с <a href="#">Договором оферты</a> и <a href="#">Политикой приватности</a>.</p>
+      <p class="modal__legal">Если аккаунта ещё нет — он создастся автоматически при первом входе. Нажимая «Получить код» или «Войти через Telegram», вы соглашаетесь с <a href="#">Договором оферты</a> и <a href="#">Политикой приватности</a>.</p>
     </div>
   </div>
 
-  <script src="script.js?v=8" defer></script>
+  <script src="script.js?v=14" defer></script>
 </body>
 </html>

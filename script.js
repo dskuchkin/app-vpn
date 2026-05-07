@@ -306,21 +306,17 @@
       if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
     });
 
-    // Tabs
-    const tabs = modal.querySelectorAll('.modal__tab');
-    const panes = modal.querySelectorAll('[data-tab-pane]');
-    tabs.forEach(t => {
-      t.addEventListener('click', () => {
-        const id = t.dataset.tab;
-        tabs.forEach(x => {
-          const active = x === t;
-          x.classList.toggle('is-active', active);
-          x.setAttribute('aria-selected', String(active));
-        });
-        panes.forEach(p => {
-          p.hidden = p.dataset.tabPane !== id;
-        });
-      });
+    // View switcher: methods <-> phone
+    const views = modal.querySelectorAll('[data-view]');
+    const showView = name => {
+      views.forEach(v => { v.hidden = v.dataset.view !== name; });
+      if (name === 'phone') {
+        const ph = modal.querySelector('[data-phone]');
+        if (ph) setTimeout(() => ph.focus(), 80);
+      }
+    };
+    modal.querySelectorAll('[data-show]').forEach(btn => {
+      btn.addEventListener('click', () => showView(btn.dataset.show));
     });
 
     // Phone input mask
@@ -343,7 +339,7 @@
     }
 
     // Form submit (demo)
-    const form = modal.querySelector('form[data-tab-pane="phone"]');
+    const form = modal.querySelector('form[data-view="phone"]');
     if (form) {
       form.addEventListener('submit', e => {
         e.preventDefault();
