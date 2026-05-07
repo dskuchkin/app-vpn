@@ -233,6 +233,8 @@ p { margin: 0 0 1em; }
   font-weight: 900;
   font-size: 20px;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .logo__icon { font-size: 28px; filter: drop-shadow(0 4px 12px rgba(255, 61, 46, 0.5)); }
 .logo__accent { color: var(--lobster-500); }
@@ -2074,8 +2076,10 @@ canvas { max-width: 100%; }
 
 /* SVG icons MUST keep an explicit square size, not stretch */
 svg.ic { width: 1em; height: 1em; flex-shrink: 0; }
-svg.ic-brand { width: 22px; height: 22px; flex-shrink: 0; }
-svg.ic-brand--lg { width: 28px; height: 28px; }
+svg.ic-brand,
+img.ic-brand { width: 22px; height: 22px; flex-shrink: 0; display: inline-block; border-radius: 5px; object-fit: contain; }
+svg.ic-brand--lg,
+img.ic-brand--lg { width: 28px; height: 28px; }
 svg.ic--star { width: 16px; height: 16px; color: #FFB800; }
 
 /* Don't let any single word break layout */
