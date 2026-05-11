@@ -429,6 +429,63 @@ p { margin: 0 0 1em; }
 }
 
 /* ==========================================================
+   Hero mascot — 3D lobster character
+   taste-skill: asymmetric placement, no glow, used as negative-space
+   anchor. Image lives at media/lobster.png; emoji fallback shows until
+   the user uploads the file.
+   ========================================================== */
+.hero-mascot {
+  position: relative;
+  width: 220px;
+  margin: 0 0 -24px -10px;   /* offset left, tuck into H1 below */
+  pointer-events: none;
+  z-index: 3;
+}
+.hero-mascot__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
+}
+.hero-mascot__fallback {
+  display: none;
+  font-size: 160px;
+  line-height: 1;
+  filter: drop-shadow(0 12px 28px rgba(255, 61, 46, 0.5));
+  animation: mascotBob 5s ease-in-out infinite;
+}
+@keyframes mascotBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* Mobile mascot */
+@media (max-width: 720px) {
+  .hero-mascot {
+    width: 180px;
+    margin: 0 0 -18px -8px;
+  }
+  .hero-mascot__fallback { font-size: 128px; }
+}
+
+/* Desktop: mascot sits in the right column over the iPhone area as an
+   asymmetric anchor, not as an inline element above the H1. */
+@media (min-width: 1025px) {
+  .hero-mascot {
+    position: absolute;
+    width: 260px;
+    top: 64px;
+    right: 12%;
+    margin: 0;
+    z-index: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mascot__fallback { animation: none; }
+}
+
+/* ==========================================================
    iPhone 17 Pro Max mockup
    — Titanium frame, Dynamic Island, side buttons
    ========================================================== */
@@ -791,6 +848,23 @@ p { margin: 0 0 1em; }
   transition: transform .25s var(--t), box-shadow .25s var(--t);
   position: relative;
   overflow: hidden;
+}
+
+/* taste-skill: Bento — ломаем равномерные 3 колонки.
+   Pattern: 3+3 / 2+2+2 / 3+3 / 6 — асимметричная сетка из 8 карточек */
+@media (min-width: 1025px) {
+  .features .feature:nth-child(1),
+  .features .feature:nth-child(2),
+  .features .feature:nth-child(6),
+  .features .feature:nth-child(7) { grid-column: span 3; }
+  .features .feature:nth-child(8) {
+    grid-column: span 6;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 28px;
+  }
+  .features .feature:nth-child(8) .feature__icon { margin-bottom: 0; }
 }
 .feature:hover {
   transform: translateY(-4px);
