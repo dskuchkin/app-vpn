@@ -157,7 +157,7 @@
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 138, 101, 0.6)';
+        ctx.fillStyle = 'rgba(255, 138, 101, 0.38)';
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -166,7 +166,7 @@
           const dy = p.y - q.y;
           const d2 = dx * dx + dy * dy;
           if (d2 < ld * ld) {
-            const op = (1 - Math.sqrt(d2) / ld) * 0.18;
+            const op = (1 - Math.sqrt(d2) / ld) * 0.12;
             ctx.strokeStyle = `rgba(255, 138, 101, ${op})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
