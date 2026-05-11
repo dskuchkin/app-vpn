@@ -379,9 +379,11 @@ p { margin: 0 0 1em; }
 }
 
 .hero__title {
-  font-size: clamp(44px, 6vw, 76px);
+  font-size: clamp(40px, 4.2vw, 60px);
   margin: 0 0 22px;
   font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
 }
 
 .hero__subtitle {
@@ -459,13 +461,17 @@ p { margin: 0 0 1em; }
   50%      { transform: translateY(-8px) rotate(3deg); }
 }
 
-/* Mobile mascot */
+/* Mobile mascot: floats right of the H1 so text wraps around it.
+   Once H1 height exceeds the mascot height, subsequent content
+   (subtitle, bullets, CTA) clears the float and uses full width. */
 @media (max-width: 720px) {
   .hero-mascot {
-    width: 180px;
-    margin: 0 0 -18px -8px;
+    float: right;
+    width: 150px;
+    margin: 0 -6px 6px 14px;
+    shape-outside: margin-box;
   }
-  .hero-mascot__fallback { font-size: 128px; }
+  .hero-mascot__fallback { font-size: 108px; }
 }
 
 /* Desktop: mascot sits in the right column over the iPhone area as an
@@ -1468,12 +1474,24 @@ p { margin: 0 0 1em; }
   .status-banner { font-size: 12px; }
   .status-banner__inner { padding: 8px 12px; }
 
-  .hero__inner { padding: 130px 18px 56px; min-height: auto; }
-  .hero__title { font-size: clamp(36px, 9vw, 48px); }
-  .hero__subtitle { font-size: 16px; margin-bottom: 24px; }
-  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__inner { padding: 72px 18px 40px; min-height: auto; }
+  /* Mobile: hero__content становится контекстом для float-mascot */
+  .hero__content { position: relative; }
+  .hero__title {
+    font-size: clamp(30px, 7.2vw, 40px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+  }
+  .hero__subtitle { font-size: 15px; margin-bottom: 18px; clear: both; }
+  .hero__bullets { clear: both; gap: 6px; margin-bottom: 16px; }
+  .hero__bullets li { padding: 10px 6px; gap: 6px; }
+  .hero__bullet-ic { width: 32px; height: 32px; }
+  .hero__bullet-label { font-size: 12px; }
+  .hero__cta { flex-direction: column; align-items: stretch; clear: both; }
   .hero__cta .btn { width: 100%; }
-  .hero__trust { gap: 22px; justify-content: space-around; width: 100%; margin-top: 4px; }
+  .hero__risk-line { clear: both; }
+  .hero__trust { gap: 22px; justify-content: flex-start; width: 100%; margin-top: 4px; clear: both; }
   .trust-item strong { font-size: 22px; }
   .trust-item span { font-size: 12px; }
 
@@ -1856,16 +1874,18 @@ p { margin: 0 0 1em; }
 }
 .trust-block__num {
   font-family: 'Unbounded', sans-serif;
-  font-size: 30px;
+  font-size: clamp(20px, 1.7vw, 26px);
   font-weight: 900;
   background: var(--grad-lobster);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   margin-bottom: 6px;
+  white-space: nowrap;
+  line-height: 1.1;
 }
-.trust-block__num small { font-size: 14px; }
+.trust-block__num small { font-size: 0.6em; font-weight: 700; }
 .trust-block__label { font-size: 13px; color: var(--text-soft); line-height: 1.4; }
 
 /* Step icons */
@@ -2294,8 +2314,8 @@ h1, h2, h3, p { overflow-wrap: anywhere; word-break: break-word; }
 
 /* Very small phones */
 @media (max-width: 380px) {
-  .hero__title { font-size: 36px; }
-  .hero__subtitle { font-size: 15px; }
+  .hero__title { font-size: 28px; }
+  .hero__subtitle { font-size: 14px; }
   .section__title { font-size: 26px; }
   .killer__chips { grid-template-columns: repeat(5, 1fr); }
   .killer__chips span { height: 32px; }
