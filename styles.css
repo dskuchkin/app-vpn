@@ -346,8 +346,8 @@ p { margin: 0 0 1em; }
   grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
   align-items: center;
-  padding: 80px 24px 100px;
-  min-height: 720px;
+  padding: 24px 24px 100px;
+  min-height: auto;
 }
 
 .hero__content { max-width: 640px; }
@@ -425,6 +425,135 @@ p { margin: 0 0 1em; }
 .trust-item span {
   font-size: 13px;
   color: var(--text-on-dark-soft);
+}
+
+/* ==========================================================
+   Hero lobster mascot
+   — Big animated 3D lobster placeholder above hero content.
+   — Video drops into .hero-lobster__media when Kling-rendered MP4/WebM
+     is ready: just replace the .hero-lobster__emoji span with a
+     <video> element (see TODO in index.html).
+   ========================================================== */
+.hero-lobster {
+  position: relative;
+  z-index: 3;
+  width: 260px;
+  height: 260px;
+  margin: 110px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-lobster__media {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 24px 56px rgba(255, 61, 46, 0.45));
+  animation: lobsterBob 4.5s ease-in-out infinite;
+}
+.hero-lobster__media video,
+.hero-lobster__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 28px;
+}
+.hero-lobster__emoji {
+  font-size: 180px;
+  line-height: 1;
+  display: inline-block;
+  animation: lobsterClaws 2.4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes lobsterBob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-10px) rotate(2deg); }
+}
+@keyframes lobsterClaws {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25%      { transform: scale(1.04) rotate(-3deg); }
+  50%      { transform: scale(1) rotate(0deg); }
+  75%      { transform: scale(1.04) rotate(3deg); }
+}
+
+/* Pulsing orange glow behind the lobster */
+.hero-lobster__glow {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 61, 46, 0.62) 0%, transparent 65%);
+  filter: blur(48px);
+  z-index: 1;
+  animation: lobsterPulse 3.8s ease-in-out infinite;
+}
+@keyframes lobsterPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.15); }
+}
+
+/* Red "X" blockers flying toward the lobster (decorative) */
+.hero-lobster__shield {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(255, 61, 46, 0.18);
+  border: 1.5px solid rgba(255, 87, 51, 0.55);
+  z-index: 1;
+}
+.hero-lobster__shield::before,
+.hero-lobster__shield::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 14px; height: 2px;
+  background: var(--lobster-300);
+  border-radius: 2px;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.hero-lobster__shield::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.hero-lobster__shield--1 { top: 8%;  left: -8%;  animation: shieldFly1 3.2s ease-in infinite; }
+.hero-lobster__shield--2 { top: 38%; right: -10%; animation: shieldFly2 3.6s ease-in infinite 0.4s; }
+.hero-lobster__shield--3 { bottom: 12%; left: -12%; animation: shieldFly3 4s   ease-in infinite 0.9s; }
+@keyframes shieldFly1 {
+  0%   { transform: translate(-80px, -40px) scale(0.7); opacity: 0; }
+  35%  { transform: translate(20px, 14px)   scale(1);   opacity: 1; }
+  55%  { transform: translate(60px, 24px)   scale(1.1); opacity: 0.6; }
+  60%, 100% { transform: translate(60px, 24px) scale(0); opacity: 0; }
+}
+@keyframes shieldFly2 {
+  0%   { transform: translate(80px, -30px)  scale(0.7); opacity: 0; }
+  35%  { transform: translate(-18px, 10px)  scale(1);   opacity: 1; }
+  55%  { transform: translate(-50px, 18px)  scale(1.1); opacity: 0.6; }
+  60%, 100% { transform: translate(-50px, 18px) scale(0); opacity: 0; }
+}
+@keyframes shieldFly3 {
+  0%   { transform: translate(-90px, 50px)  scale(0.7); opacity: 0; }
+  35%  { transform: translate(20px, -10px)  scale(1);   opacity: 1; }
+  55%  { transform: translate(50px, -20px)  scale(1.1); opacity: 0.6; }
+  60%, 100% { transform: translate(50px, -20px) scale(0); opacity: 0; }
+}
+
+/* Mobile sizing */
+@media (max-width: 720px) {
+  .hero-lobster { width: 180px; height: 180px; margin-top: 84px; }
+  .hero-lobster__emoji { font-size: 124px; }
+  .hero-lobster__shield { width: 20px; height: 20px; }
+  .hero-lobster__shield::before,
+  .hero-lobster__shield::after { width: 10px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-lobster__media,
+  .hero-lobster__emoji,
+  .hero-lobster__glow,
+  .hero-lobster__shield { animation: none; }
 }
 
 /* ==========================================================
@@ -1336,7 +1465,7 @@ p { margin: 0 0 1em; }
 @media (max-width: 1024px) {
   .hero__inner {
     grid-template-columns: 1fr;
-    padding: 96px 24px 80px;
+    padding: 20px 24px 80px;
     gap: 32px;
     text-align: center;
   }
@@ -1392,7 +1521,7 @@ p { margin: 0 0 1em; }
   .status-banner { font-size: 12px; }
   .status-banner__inner { padding: 8px 12px; }
 
-  .hero__inner { padding: 130px 18px 56px; min-height: auto; }
+  .hero__inner { padding: 16px 18px 56px; min-height: auto; }
   .hero__title { font-size: clamp(36px, 9vw, 48px); }
   .hero__subtitle { font-size: 16px; margin-bottom: 24px; }
   .hero__cta { flex-direction: column; align-items: stretch; }
