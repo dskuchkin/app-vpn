@@ -510,12 +510,7 @@ p { margin: 0 0 1em; }
      Inner screen is at x=100,y=100,w=1320,h=2868 (see template.json). */
   aspect-ratio: 1520 / 3068;
   height: auto;
-  background:
-    url('https://raw.githubusercontent.com/jonnyjackson26/device-frames-media/main/device-frames-output/Apple%20iPhone/17%20Pro%20Max/Deep%20Blue/frame.png')
-    center / contain
-    no-repeat;
-  /* Frame already includes border radius + side buttons in the PNG.
-     Below is fallback radius if the frame image fails to load. */
+  background: transparent;
   border-radius: 56px;
   padding: 0;
   box-shadow:
@@ -603,9 +598,9 @@ p { margin: 0 0 1em; }
   left: 6.579%;
   width: 86.842%;
   height: 93.481%;
-  border-radius: 7%;
   background: #000;
   overflow: hidden;
+  z-index: 1;
 }
 .phone__screen-img {
   width: 100%;
@@ -613,6 +608,21 @@ p { margin: 0 0 1em; }
   display: block;
   object-fit: cover;
   object-position: center top;
+}
+
+/* Frame overlay — sits ON TOP of the screenshot and uses the upstream
+   frame.png as a punch-out mask. Its transparent screen area lets the
+   screenshot show through; the opaque body+notch cover any screenshot
+   corners that poke past the iPhone's rounded screen radius. */
+.phone__bezel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    url('https://raw.githubusercontent.com/jonnyjackson26/device-frames-media/main/device-frames-output/Apple%20iPhone/17%20Pro%20Max/Deep%20Blue/frame.png')
+    center / contain
+    no-repeat;
 }
 .phone__status {
   display: flex;
