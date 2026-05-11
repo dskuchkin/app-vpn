@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🦞</text></svg>" />
 </head>
 <body>
@@ -220,6 +220,17 @@
     </div>
     <div class="container hero__inner">
       <div class="hero__content">
+        <!-- Маскот LOBSTER VPN (положите свою картинку в media/lobster.png) -->
+        <figure class="hero-mascot" aria-hidden="true">
+          <img class="hero-mascot__img"
+               src="media/lobster.png"
+               alt=""
+               loading="eager"
+               decoding="async"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <div class="hero-mascot__fallback">🦞</div>
+        </figure>
+
         <h1 class="hero__title">
           Сбер, Озон и MAX работают.<br/>
           YouTube&nbsp;&mdash; <span class="text-gradient">без рекламы.</span>
