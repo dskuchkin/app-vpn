@@ -598,6 +598,11 @@ p { margin: 0 0 1em; }
   left: 6.579%;
   width: 86.842%;
   height: 93.481%;
+  /* iPhone 17 Pro Max screen has rounded corners (~55px on a 1320px
+     screen). Clipping the screenshot here too — frame.png alone wasn't
+     enough because its cutout is also rounded, so a rectangular screen
+     poked past the rounded transparent area at the corners. */
+  border-radius: 9%;
   background: #000;
   overflow: hidden;
   z-index: 1;
